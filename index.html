@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Tricode Assistant</title>
+   <link rel="icon" href="tricode.png">
+   <link rel="stylesheet" href="style.css">
+<style type="text/css">
+  .battery .battery-level {
+    background-color: #666;
+    height: 100%;
+}
+.battery .battery-level.high {
+    background-color: #66CD00;
+}
+.battery .battery-level.medium {
+    background-color: #FCD116;
+}
+.battery .battery-level.low {
+    background-color: #FF3333;
+}
+.battery .battery-level {
+    text-align: center;
+}
+
+.status{
+  font-family: 'Courier New', Courier, monospace;
+  background-color: rgb(25, 235, 25);
+  color: #fff;
+  text-align: center;
+}
+#charging{
+  margin-left: -50px;
+}
+</style>
+<script type="text/javascript">
+ window.onload = function () {
+      function updateBatteryStatus(battery) {
+        document.querySelector('#charging').textContent = battery.charging ? 'Charging' : 'not charging';
+        document.querySelector('#level').textContent = Math.round(battery.level*100)+"%";
+        //document.querySelector('#dischargingTime').textContent = battery.dischargingTime / 60;
+      }
+
+      navigator.getBattery().then(function(battery) {
+        // Update the battery status initially when the promise resolves ...
+        updateBatteryStatus(battery);
+
+        // .. and for any subsequent updates.
+        battery.onchargingchange = () => {
+          updateBatteryStatus(battery);
+        };
+
+        battery.onlevelchange = () => {
+          updateBatteryStatus(battery);
+        };
+
+        battery.ondischargingtimechange = () => {
+          updateBatteryStatus(battery);
+        };
+      });
+      if(navigator.onLine)
+   {
+     alert('You are Online');
+   }else
+   {
+     alert('You are Offline')
+   }
+    };
+    var ifConnected = window.navigator.onLine;
+    if (ifConnected) {
+      document.getElementById("checkOnline").innerHTML = "Online";
+      document.getElementById("checkOnline").style.color = "green";
+    } else {
+      document.getElementById("checkOnline").innerHTML = "Offline";
+      document.getElementById("checkOnline").style.color = "red";
+    }
+
+setInterval(function(){ 
+
+  var ifConnected = window.navigator.onLine;
+    if (ifConnected) {
+      document.getElementById("checkOnline").innerHTML = "Online";
+      document.getElementById("checkOnline").style.color = "green";
+    } else {
+      document.getElementById("checkOnline").innerHTML = "Offline";
+      document.getElementById("checkOnline").style.color = "red";
+    }
+
+ }, 3000);
+</script>
+</head>
+  <body>
+    <div class="status">
+    <div id="charging">(charging state unknown)</div>
+    <div id="level">(battery level unknown)</div>
+    <!--<div id="dischargingTime">(discharging time unknown)</div>-->
+    <p id="checkOnline"></p>
+  </div>
+
+<!--JavaScript Libraries
+     <script src="artyom.js"></script>-->
+     <script src="synthesis.js"></script>
+     <script src="artyom.window.js"></script>
+     <script src="jquery-3.5.1.min.js"></script>
+     <script src="artyom.window.min.js"></script>
+
+     <img src="jarvis.png" class="speak" onclick="startListening()" alt="jarvis tap to speak">
+
+     <!--<div class="cricle-info border-radius">
+			<div class="circle1 border-radius circle"></div>
+			<div class="circle2 border-radius circle"></div>
+      <div class="fecha" onclick="startListening()">
+        
+			</div>
+    </div>-->
+    <div id="battery"></div>
+    <div id="battery"><div id="battery-level"></div></div>
+  </body>
+</html>
+
+
+    <!--HTML part for structuring the Android Application
+<div class="jarvis">
+<img src="jarvis.png" class="speak"  alt="jarvis tap to speak">
+</div>-->
+<!--<form id="VoiceAssistant" action="https://www.google.com/search" method="GET">
+<input type="text" id="transcript" name="q" />
+<img src="mic.png" width="20%" height="20%" onclick="startDictation()" class="speak" alt="Tap and speak">
+</form>-->
+ 
